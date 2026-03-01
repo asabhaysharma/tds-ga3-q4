@@ -1,0 +1,31 @@
+name: Daily Automated Commit
+
+on:
+  schedule:
+    # Runs at 12:30 UTC every day. 
+    # The assignment requires specific hours/minutes instead of wildcards like '*'.
+    - cron: '30 12 * * *'
+  workflow_dispatch: # This allows you to trigger it manually for testing
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Step for 23f3003276@ds.study.iitm.ac.in
+        run: |
+          echo "Preparing update for student email"
+
+      - name: Create local changes
+        run: |
+          date > last_run.txt
+
+      - name: Commit and Push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add last_run.txt
+          git commit -m "Daily automated update"
+          git push
